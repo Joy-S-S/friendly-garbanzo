@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='files.css') }}">
+  <title>Files</title>
+</head>
+
+<body>
+  <div class="header">
+    <img class="logo" src="{{ url_for('static', filename='onyx.png') }}" alt="Logo" />
+    <h1>{{ username }}'s Files</h1>
+  </div>
+
+  <!-- File Upload Form -->
+  <div class="upload-container">
+    <form method="POST" action="{{ url_for('upload', username=username) }}" enctype="multipart/form-data">
+      <div class="upload-box">
+        <label for="file-upload" class="upload-label">
+          <span class="upload-text">Drag & drop files here or click to browse</span>
+        </label>
+        <input type="file" id="file-upload" name="file" class="file-input" multiple>
+      </div>
+      <button type="submit" class="upload-button">Upload</button>
+    </form>
+  </div>
+
+  <!-- File Grid -->
+  <div class="file-grid">
+    {% for file in files %}
+      <div class="file-card">
+        <!-- Use a default icon for all files -->
+        <div class="file-icon">📁</div>
+        <div class="file-name">{{ file.name }}</div>
+        <div class="file-size">{{ file.size }}</div>
+
+        <!-- Hover Actions -->
+        <div class="file-actions">
+          <a href="{{ url_for('download', username=username, filename=file.name) }}" class="action-button" title="Download">
+            ⬇️
+          </a>
+          <a href="{{ url_for('view', username=username, filename=file.name) }}" class="action-button" title="View">
+            👁️
+          </a>
+          <a href="{{ url_for('delete', username=username, filename=file.name) }}" class="action-button" title="Delete">
+            🗑️
+          </a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Logout Button -->
+  <div class="logout">
+    <a href="{{ url_for('logout') }}" class="button">Log Out</a>
+  </div>
+</body>
+
+</html>

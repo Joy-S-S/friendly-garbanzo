@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+  </style>
+  <title>Login Page</title>
+</head>
+
+<body>
+  <img class="logo" src="{{ url_for('static', filename='onyx.png') }}" alt="Logo" />
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="enter-your-password-to-log-in">
+      Enter your Username and Password to log in
+    </div>
+    <!-- Add a form with POST method -->
+    <form method="POST" action="{{ url_for('handle_login') }}">
+      <input type="text" class="field" id="Username" name="username" placeholder="Username" required>
+      <input type="password" class="field" id="Password" name="password" placeholder="Password" required>
+      <button type="submit" class="button" id="logIn">Log in</button>
+    </form>
+    <div class="divider">
+      <div class="rectangle-11"></div>
+      <div class="or-sign-up">or sign up</div>
+      <div class="rectangle-10"></div>
+    </div>
+    <a href="{{ url_for('signup') }}" style="text-decoration: none;">
+      <button class="button" id="signUp">Sign Up</button>
+    </a>
+  </div>
+</body>
+
+</html>
